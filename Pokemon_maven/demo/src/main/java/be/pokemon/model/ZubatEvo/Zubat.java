@@ -2,8 +2,6 @@ package be.pokemon.model.ZubatEvo;
 
 import java.util.Locale;
 
-import be.pokemon.model.SquirtleEvo.Wartortle;
-
 public class Zubat extends be.pokemon.Pokemon {
     private double damage;
     private int evolutionStage;
@@ -44,23 +42,45 @@ public class Zubat extends be.pokemon.Pokemon {
 
     public void evolveToGolbat() {
         if (this.XP >= 50 && this.level >= 25) {
-            Wartortle wartortle = new Wartortle(this.name, this.level, this.height, this.HP, this.XP);
+            Golbat golbat = new Golbat(this.name, this.level, this.height, this.HP, this.XP);
 
-            wartortle.setHP(wartortle.getHP() + 30);
-            wartortle.setLevel(wartortle.getLevel() + 1);
-            wartortle.setHeight(wartortle.getHeight() * 2.5);
-            wartortle.setXP(wartortle.getXP() - 50);
-            wartortle.setPower(this.power);
+            golbat.setHP(golbat.getHP() + 30);
+            golbat.setLevel(golbat.getLevel() + 1);
+            golbat.setHeight(golbat.getHeight() * 2.5);
+            golbat.setXP(golbat.getXP() - 50);
+            golbat.setPower(this.power);
             System.out.println(this.name + " has evolved into Golbat!");
 
-            this.name = wartortle.getName();
-            this.level = wartortle.getLevel();
-            this.height = wartortle.getHeight();
-            this.HP = wartortle.getHP();
-            this.XP = wartortle.getXP();
-            this.power = wartortle.getPower();
+            this.name = golbat.getName();
+            this.level = golbat.getLevel();
+            this.height = golbat.getHeight();
+            this.HP = golbat.getHP();
+            this.XP = golbat.getXP();
+            this.power = golbat.getPower();
         } else {
-            System.out.println("Not enough XP or level to evolve Squirtle to Golbat!");
+            System.out.println("Not enough XP or level to evolve Zubat to Golbat!");
+        }
+    }
+
+    public void evolveToCrobat() {
+        if (this.XP >= 50 && this.level >= 25) {
+            Crobat crobat = new Crobat(this.name, this.level, this.height, this.HP, this.XP);
+
+            crobat.setHP(crobat.getHP() + 30);
+            crobat.setLevel(crobat.getLevel() + 1);
+            crobat.setHeight(crobat.getHeight() * 2.5);
+            crobat.setXP(crobat.getXP() - 50);
+            crobat.setPower(this.power);
+            System.out.println(this.name + " has evolved into Crobat!");
+
+            this.name = crobat.getName();
+            this.level = crobat.getLevel();
+            this.height = crobat.getHeight();
+            this.HP = crobat.getHP();
+            this.XP = crobat.getXP();
+            this.power = crobat.getPower();
+        } else {
+            System.out.println("Not enough XP or level to evolve Golbat to Crobat!");
         }
     }
 
@@ -85,7 +105,7 @@ public class Zubat extends be.pokemon.Pokemon {
             this.evolutionStage = 2;
 
         } else if (this.evolutionStage == 2) {
-            evolveToGolbat();
+            evolveToCrobat();
             this.evolutionStage = 3;
 
         } else if (this.evolutionStage == 3) {

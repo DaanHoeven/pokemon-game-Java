@@ -87,12 +87,9 @@ public class Wartortle extends be.pokemon.Pokemon implements Attack1, Attack2, E
     @Override
     public void evolvePokemon() {
         if (this.evolutionStage == 2) {
-            // Evolution to Blastoise
             this.evolutionStage = 3;
             evolveToBlastoise();
-            // Update other attributes as needed
         } else if (this.evolutionStage == 3) {
-            // Blastoise is the final evolution stage
             System.out.println("Can not evolve this Pokémon further!");
         }
     }

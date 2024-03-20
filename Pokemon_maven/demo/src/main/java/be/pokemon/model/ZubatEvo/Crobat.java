@@ -2,8 +2,6 @@ package be.pokemon.model.ZubatEvo;
 
 import java.util.Locale;
 
-import be.pokemon.model.SquirtleEvo.Wartortle;
-
 import be.pokemon.implementations.Evolve;
 
 public class Crobat extends be.pokemon.Pokemon implements Evolve {
@@ -42,28 +40,6 @@ public class Crobat extends be.pokemon.Pokemon implements Evolve {
         }
     }
 
-    public Wartortle evolveToWartortle() {
-
-        if (this.XP >= 50 && this.level >= 25) {
-            Wartortle wartortle = new Wartortle(this.name, this.level, this.height, this.HP, this.XP);
-
-            wartortle.setHP(wartortle.getHP() + 30);
-            wartortle.setLevel(wartortle.getLevel() + 1);
-            wartortle.setHeight(wartortle.getHeight() * 2.5);
-            wartortle.setXP(wartortle.getXP() - 50);
-            wartortle.setPower(this.power);
-            System.out.println(this.name + " has evolved into Wartortle!");
-
-            return wartortle;
-        } else if (this.level < 25) {
-            System.out.println("You have to be level 25 or higher to evolve to Wartorle!");
-            return null;
-        } else {
-            System.out.println("You need " + (50 - this.XP) + " to evolve to Wartortle!");
-            return null;
-        }
-    }
-
     public int getXP(int amount) {
         return this.XP += amount;
     }
@@ -96,7 +72,7 @@ public class Crobat extends be.pokemon.Pokemon implements Evolve {
             this.XP = crobat.XP;
             this.power = crobat.power;
         } else {
-            System.out.println("Not enough XP or level to evolve Squirtle to Crobat!");
+            System.out.println("Not enough XP or level to evolve Golbat to Crobat!");
         }
     }
 

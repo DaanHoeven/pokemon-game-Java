@@ -11,8 +11,8 @@ public class Squirtle extends be.pokemon.Pokemon implements Attack1, Attack2, Ev
     private double damage;
     private int evolutionStage;
 
-    public Squirtle(String name, int level, double height, double HP, int XP) {
-        super(name, level, height, HP, XP);
+    public Squirtle(String name, String type, String element, int level, double height, double HP, int XP) {
+        super(name, type, element, level, height, HP, XP);
         this.evolutionStage = 1;
     }
 
@@ -56,7 +56,9 @@ public class Squirtle extends be.pokemon.Pokemon implements Attack1, Attack2, Ev
 
     public void evolveToWartortle() {
         if (this.XP >= 50 && this.level >= 25) {
-            Wartortle wartortle = new Wartortle(this.name, this.level, this.height, this.HP, this.XP);
+            Wartortle wartortle = new Wartortle(this.getName(), this.getType(), this.getElement(), this.getLevel(),
+                    this.getHeight(), this.getHP(),
+                    this.getXP());
 
             wartortle.setHP(wartortle.getHP() + 30);
             wartortle.setLevel(wartortle.getLevel() + 1);
@@ -78,7 +80,9 @@ public class Squirtle extends be.pokemon.Pokemon implements Attack1, Attack2, Ev
 
     public void evolveToBlastoise() {
         if (this.XP >= 50 && this.level >= 25) {
-            Blastoise blastoise = new Blastoise(this.name, this.level, this.height, this.HP, this.XP);
+            Blastoise blastoise = new Blastoise(this.getName(), this.getType(), this.getElement(), this.getLevel(),
+                    this.getHeight(), this.getHP(),
+                    this.getXP());
 
             blastoise.setHP(blastoise.getHP() + 30);
             blastoise.setLevel(blastoise.getLevel() + 1);
@@ -102,6 +106,7 @@ public class Squirtle extends be.pokemon.Pokemon implements Attack1, Attack2, Ev
     public void evolvePokemon() {
         if (this.evolutionStage == 1) {
             this.evolutionStage = 2;
+            this.type = "wartortle";
             evolveToWartortle();
         } else if (this.evolutionStage == 2) {
             evolveToBlastoise();

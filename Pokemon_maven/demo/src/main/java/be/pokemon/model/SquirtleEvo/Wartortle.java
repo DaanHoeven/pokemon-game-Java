@@ -11,8 +11,8 @@ public class Wartortle extends be.pokemon.Pokemon implements Attack1, Attack2, E
     private double damage;
     private int evolutionStage;
 
-    public Wartortle(String name, int level, double height, double HP, int XP) {
-        super(name, level, height, HP, XP);
+    public Wartortle(String name, String type, String element, int level, double height, double HP, int XP) {
+        super(name, type, element, level, height, HP, XP);
         this.evolutionStage = 2;
     }
 
@@ -47,7 +47,9 @@ public class Wartortle extends be.pokemon.Pokemon implements Attack1, Attack2, E
     public Blastoise evolveToBlastoise() {
 
         if (this.XP >= 100 && this.level > 50) {
-            Blastoise blastoise = new Blastoise(this.name, this.level, this.height, this.HP, this.XP);
+            Blastoise blastoise = new Blastoise(this.getName(), this.getType(), this.getElement(), this.getLevel(),
+                    this.getHeight(), this.getHP(),
+                    this.getXP());
 
             blastoise.setHP(blastoise.getHP() + 30);
             blastoise.setLevel(blastoise.getLevel() + 1);
@@ -70,10 +72,6 @@ public class Wartortle extends be.pokemon.Pokemon implements Attack1, Attack2, E
         System.out.println(this.XP);
     }
 
-    public int getXP(int amount) {
-        return this.XP += amount;
-    }
-
     @Override
     public double doAttackOne() {
         return aquaJet();
@@ -88,6 +86,7 @@ public class Wartortle extends be.pokemon.Pokemon implements Attack1, Attack2, E
     public void evolvePokemon() {
         if (this.evolutionStage == 2) {
             this.evolutionStage = 3;
+            this.type = "blastoise";
             evolveToBlastoise();
         } else if (this.evolutionStage == 3) {
             System.out.println("Can not evolve this Pokémon further!");

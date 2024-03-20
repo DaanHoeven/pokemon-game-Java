@@ -11,8 +11,8 @@ public class Eevee extends be.pokemon.Pokemon implements Attack1, Attack2, Evolv
     private double damage;
     private int evolutionStage;
 
-    public Eevee(String name, int level, double height, double HP, int XP) {
-        super(name, level, height, HP, XP);
+    public Eevee(String name, String type, String element, int level, double height, double HP, int XP) {
+        super(name, type, element, level, height, HP, XP);
         this.evolutionStage = 1;
     }
 
@@ -47,7 +47,8 @@ public class Eevee extends be.pokemon.Pokemon implements Attack1, Attack2, Evolv
     public Jolteon evolveToJolteon() {
 
         if (this.getXP() >= 50) {
-            Jolteon jolteon = new Jolteon(this.getName(), this.getLevel(), this.getHeight(), this.getHP(),
+            Jolteon jolteon = new Jolteon(this.getName(), this.getType(), this.getElement(), this.getLevel(),
+                    this.getHeight(), this.getHP(),
                     this.getXP());
 
             jolteon.setHP(jolteon.getHP() + 30);
@@ -61,10 +62,6 @@ public class Eevee extends be.pokemon.Pokemon implements Attack1, Attack2, Evolv
             System.out.println("Not enough XP to evolve to Jolteon!");
             return null;
         }
-    }
-
-    public int getXP(int amount) {
-        return this.XP += amount;
     }
 
     @Override
@@ -81,6 +78,8 @@ public class Eevee extends be.pokemon.Pokemon implements Attack1, Attack2, Evolv
     public void evolvePokemon() {
         if (this.evolutionStage == 1) {
             this.evolutionStage = 2;
+            this.element = "electricity";
+            this.type = "jolteon";
             evolveToJolteon();
         } else if (this.evolutionStage == 2) {
             System.out.println("Can not evolve this Pokémon further!");

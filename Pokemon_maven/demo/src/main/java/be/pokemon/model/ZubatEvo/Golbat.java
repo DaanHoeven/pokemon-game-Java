@@ -10,9 +10,8 @@ public class Golbat extends be.pokemon.Pokemon implements Attack1, Attack2, Evol
     private double damage;
     private int evolutionStage;
 
-    public Golbat(String name, int level, double height, double HP, int XP) {
-        super(name, level, height, HP, XP);
-        this.evolutionStage = 2;
+    public Golbat(String name, String type, String element, int level, double height, double HP, int XP) {
+        super(name, type, element, level, height, HP, XP);
     }
 
     public double echoBeam() {
@@ -47,7 +46,9 @@ public class Golbat extends be.pokemon.Pokemon implements Attack1, Attack2, Evol
     public Crobat evolveToWartortle() {
 
         if (this.XP >= 500 && this.level >= 50) {
-            Crobat crobat = new Crobat(this.name, this.level, this.height, this.HP, this.XP);
+            Crobat crobat = new Crobat(this.getName(), this.getType(), this.getElement(), this.getLevel(),
+                    this.getHeight(), this.getHP(),
+                    this.getXP());
 
             crobat.setHP(crobat.getHP() + 30);
             crobat.setLevel(crobat.getLevel() + 1);
@@ -66,10 +67,6 @@ public class Golbat extends be.pokemon.Pokemon implements Attack1, Attack2, Evol
         }
     }
 
-    public int getXP(int amount) {
-        return this.XP += amount;
-    }
-
     @Override
     public double doAttackOne() {
         return echoBeam();
@@ -82,7 +79,9 @@ public class Golbat extends be.pokemon.Pokemon implements Attack1, Attack2, Evol
 
     public void evolveToCrobat() {
         if (this.XP >= 50 && this.level >= 25) {
-            Crobat crobat = new Crobat(this.name, this.level, this.height, this.HP, this.XP);
+            Crobat crobat = new Crobat(this.getName(), this.getType(), this.getElement(), this.getLevel(),
+                    this.getHeight(), this.getHP(),
+                    this.getXP());
 
             crobat.setHP(crobat.getHP() + 30);
             crobat.setLevel(crobat.getLevel() + 1);

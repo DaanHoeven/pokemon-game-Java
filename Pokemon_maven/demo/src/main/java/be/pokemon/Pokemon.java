@@ -2,16 +2,22 @@ package be.pokemon;
 
 import java.util.Scanner;
 
+import be.pokemon.model.DomainException;
+
 public abstract class Pokemon {
     protected String name;
+    protected String type;
+    protected String element;
     protected int level;
     protected double height;
     protected double HP;
     protected int XP;
     protected int power;
 
-    public Pokemon(String name, int level, double height, double HP, int XP) {
+    public Pokemon(String name, String type, String element, int level, double height, double HP, int XP) {
         setName(name);
+        setType(type);
+        setElement(element);
         setLevel(level);
         setHeight(height);
         setHP(HP);
@@ -24,7 +30,32 @@ public abstract class Pokemon {
     }
 
     public void setName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new DomainException("Name cannot be null or empty");
+        }
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        if (type == null || type.isEmpty()) {
+            throw new DomainException("Type cannot be null or empty");
+        }
+        this.type = type;
+    }
+
+    public String getElement() {
+        return element;
+    }
+
+    public void setElement(String element) {
+        if (element == null || element.isEmpty()) {
+            throw new DomainException("Element cannot be null or empty");
+        }
+        this.element = element;
     }
 
     public int getLevel() {
@@ -32,6 +63,9 @@ public abstract class Pokemon {
     }
 
     public void setLevel(int level) {
+        if (level <= 0) {
+            throw new DomainException("Level must be a positive integer");
+        }
         this.level = level;
     }
 
@@ -40,6 +74,9 @@ public abstract class Pokemon {
     }
 
     public void setHeight(double height) {
+        if (height <= 0) {
+            throw new DomainException("Height must be a positive number");
+        }
         this.height = height;
     }
 
@@ -47,8 +84,12 @@ public abstract class Pokemon {
         return HP;
     }
 
-    public void setHP(double HP) {
-        this.HP = HP;
+    public void setHP(Double HP) {
+        if (HP == null || HP <= 0) {
+            this.HP = 1.0;
+        } else {
+            this.HP = HP;
+        }
     }
 
     public int getXP() {
@@ -56,6 +97,9 @@ public abstract class Pokemon {
     }
 
     public void setXP(int XP) {
+        if (XP <= 0) {
+            throw new DomainException("XP must be a positive integer");
+        }
         this.XP = XP;
     }
 
@@ -64,10 +108,17 @@ public abstract class Pokemon {
     }
 
     public void setPower(int power) {
+        if (power < 0) {
+            throw new DomainException("Power cannot be negative");
+        }
         this.power = power;
     }
 
     public void takeDamage(double damage) {
+        if (damage <= 0) {
+            throw new DomainException("Damage must be a positive number");
+        }
+
         this.HP -= damage;
         if (this.HP < 0) {
             this.HP = 0;
@@ -79,10 +130,16 @@ public abstract class Pokemon {
     }
 
     public int levelUpByNumber(int levels) {
+        if (levels <= 0) {
+            throw new DomainException("Number of levels to increase must be positive");
+        }
         return this.level += levels;
     }
 
     public int powerUpByNumber(int power) {
+        if (power <= 0) {
+            throw new DomainException("Power increase must be positive");
+        }
         return this.power += power;
     }
 

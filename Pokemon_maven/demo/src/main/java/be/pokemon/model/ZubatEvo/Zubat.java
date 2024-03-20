@@ -6,9 +6,8 @@ public class Zubat extends be.pokemon.Pokemon {
     private double damage;
     private int evolutionStage;
 
-    public Zubat(String name, int level, double height, double HP, int XP) {
-        super(name, level, height, HP, XP);
-        this.evolutionStage = 1;
+    public Zubat(String name, String type, String element, int level, double height, double HP, int XP) {
+        super(name, type, element, level, height, HP, XP);
     }
 
     public double bite() {
@@ -42,7 +41,9 @@ public class Zubat extends be.pokemon.Pokemon {
 
     public void evolveToGolbat() {
         if (this.XP >= 50 && this.level >= 25) {
-            Golbat golbat = new Golbat(this.name, this.level, this.height, this.HP, this.XP);
+            Golbat golbat = new Golbat(this.getName(), this.getType(), this.getElement(), this.getLevel(),
+                    this.getHeight(), this.getHP(),
+                    this.getXP());
 
             golbat.setHP(golbat.getHP() + 30);
             golbat.setLevel(golbat.getLevel() + 1);
@@ -64,7 +65,9 @@ public class Zubat extends be.pokemon.Pokemon {
 
     public void evolveToCrobat() {
         if (this.XP >= 50 && this.level >= 25) {
-            Crobat crobat = new Crobat(this.name, this.level, this.height, this.HP, this.XP);
+            Crobat crobat = new Crobat(this.getName(), this.getType(), this.getElement(), this.getLevel(),
+                    this.getHeight(), this.getHP(),
+                    this.getXP());
 
             crobat.setHP(crobat.getHP() + 30);
             crobat.setLevel(crobat.getLevel() + 1);
@@ -84,10 +87,6 @@ public class Zubat extends be.pokemon.Pokemon {
         }
     }
 
-    public int getXP(int amount) {
-        return this.XP += amount;
-    }
-
     @Override
     public double doAttackOne() {
         return bite();
@@ -103,11 +102,11 @@ public class Zubat extends be.pokemon.Pokemon {
         if (this.evolutionStage == 1) {
             evolveToGolbat();
             this.evolutionStage = 2;
-
+            this.type = "golbat";
         } else if (this.evolutionStage == 2) {
             evolveToCrobat();
             this.evolutionStage = 3;
-
+            this.type = "crobat";
         } else if (this.evolutionStage == 3) {
 
             System.out.println("Can not evolve this Pokémon further!");

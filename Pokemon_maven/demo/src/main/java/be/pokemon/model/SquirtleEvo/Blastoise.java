@@ -10,8 +10,8 @@ public class Blastoise extends be.pokemon.Pokemon implements Attack1, Attack2, E
 
     private double damage;
 
-    public Blastoise(String name, int level, double height, double HP, int XP) {
-        super(name, level, height, HP, XP);
+    public Blastoise(String name, String type, String element, int level, double height, double HP, int XP) {
+        super(name, type, element, level, height, HP, XP);
     }
 
     public void growl() {

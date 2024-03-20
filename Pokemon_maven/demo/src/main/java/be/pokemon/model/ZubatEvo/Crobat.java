@@ -7,8 +7,8 @@ import be.pokemon.implementations.Evolve;
 public class Crobat extends be.pokemon.Pokemon implements Evolve {
     private double damage;
 
-    public Crobat(String name, int level, double height, double HP, int XP) {
-        super(name, level, height, HP, XP);
+    public Crobat(String name, String type, String element, int level, double height, double HP, int XP) {
+        super(name, type, element, level, height, HP, XP);
     }
 
     public double echoBeam() {
@@ -40,10 +40,6 @@ public class Crobat extends be.pokemon.Pokemon implements Evolve {
         }
     }
 
-    public int getXP(int amount) {
-        return this.XP += amount;
-    }
-
     @Override
     public double doAttackOne() {
         return echoBeam();
@@ -56,7 +52,7 @@ public class Crobat extends be.pokemon.Pokemon implements Evolve {
 
     public void evolveToCrobat() {
         if (this.XP >= 50 && this.level >= 25) {
-            Crobat crobat = new Crobat(this.name, this.level, this.height, this.HP, this.XP);
+            Crobat crobat = new Crobat(this.name, this.type, this.element, this.level, this.height, this.HP, this.XP);
 
             crobat.HP += 30;
             crobat.level += 1;

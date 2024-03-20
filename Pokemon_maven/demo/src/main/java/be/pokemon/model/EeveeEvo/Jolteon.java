@@ -10,8 +10,8 @@ public class Jolteon extends be.pokemon.Pokemon implements Attack1, Attack2, Evo
 
     private double damage;
 
-    public Jolteon(String name, int level, double height, double HP, int XP) {
-        super(name, level, height, HP, XP);
+    public Jolteon(String name, String type, String element, int level, double height, double HP, int XP) {
+        super(name, type, element, level, height, HP, XP);
     }
 
     public double doubleKick() {

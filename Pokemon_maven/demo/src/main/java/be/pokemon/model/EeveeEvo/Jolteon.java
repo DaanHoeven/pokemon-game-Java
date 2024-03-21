@@ -8,13 +8,17 @@ import be.pokemon.implementations.Attack1;
 import be.pokemon.implementations.Attack2;
 import be.pokemon.implementations.Evolve;
 
-@JsonTypeName("jolteon")
+@JsonTypeName("pR2e9T")
 public class Jolteon extends be.pokemon.Pokemon implements Attack1, Attack2, Evolve {
 
     private double damage;
 
-    public Jolteon(String name, String element, int level, double height, double hp, int xp) {
-        super(name, element, level, height, hp, xp);
+    public Jolteon(String name, String type, String element, int level, double height, double hp, int xp) {
+        super(name, type, element, level, height, hp, xp);
+    }
+
+    public String getId() {
+        return "pR2e9T";
     }
 
     public double doubleKick() {

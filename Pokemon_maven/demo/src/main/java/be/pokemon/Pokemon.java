@@ -2,6 +2,8 @@ package be.pokemon;
 
 import java.util.Scanner;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import be.pokemon.model.DomainException;
 import be.pokemon.model.EeveeEvo.Eevee;
 import be.pokemon.model.EeveeEvo.Jolteon;
@@ -12,41 +14,42 @@ import be.pokemon.model.ZubatEvo.Crobat;
 import be.pokemon.model.ZubatEvo.Golbat;
 import be.pokemon.model.ZubatEvo.Zubat;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "typeOfPokemon")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "id")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = Eevee.class, name = "eevee"),
-        @JsonSubTypes.Type(value = Jolteon.class, name = "jolteon"),
-        @JsonSubTypes.Type(value = Blastoise.class, name = "blastoise"),
-        @JsonSubTypes.Type(value = Squirtle.class, name = "squirtle"),
-        @JsonSubTypes.Type(value = Wartortle.class, name = "wartortle"),
-        @JsonSubTypes.Type(value = Crobat.class, name = "crobat"),
-        @JsonSubTypes.Type(value = Zubat.class, name = "zubat"),
-        @JsonSubTypes.Type(value = Golbat.class, name = "golbat")
+        @JsonSubTypes.Type(value = Eevee.class, name = "A4fG7h"),
+        @JsonSubTypes.Type(value = Jolteon.class, name = "pR2e9T"),
+        @JsonSubTypes.Type(value = Squirtle.class, name = "iR3O0A"),
+        @JsonSubTypes.Type(value = Wartortle.class, name = "zY3tR7"),
+        @JsonSubTypes.Type(value = Blastoise.class, name = "5dFj8Q"),
+        @JsonSubTypes.Type(value = Zubat.class, name = "H7rT5g"),
+        @JsonSubTypes.Type(value = Golbat.class, name = "bN6eF2"),
+        @JsonSubTypes.Type(value = Crobat.class, name = "3mP8wS")
 })
 
 public abstract class Pokemon {
     protected String name;
+    private String type;
     protected String element;
     protected int level;
     protected double height;
     protected double hp;
     protected int xp;
     protected int power;
-    private String type;
+    private String id;
 
-    public Pokemon(String name, String element, int level, double height, double hp, int xp) {
+    public Pokemon(String name, String type, String element, int level, double height, double hp, int xp) {
         setName(name);
+        setType(type);
         setElement(element);
         setLevel(level);
         setHeight(height);
         sethp(hp);
         setxp(xp);
         setPower(power);
-        this.type = this.getClass().getAnnotation(JsonTypeName.class).value();
+
     }
 
     public String getName() {
@@ -136,6 +139,15 @@ public abstract class Pokemon {
             throw new DomainException("Invalid Pokemon type: " + type);
         }
         this.type = type;
+    }
+
+    @JsonProperty("id")
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     private boolean isValidType(String type) {
@@ -252,6 +264,30 @@ public abstract class Pokemon {
             }
 
             isPlayer1Turn = !isPlayer1Turn;
+        }
+    }
+
+    public static Pokemon createPokemon(String name, String type, String element, int level, double height, double hp,
+            int xp, String id) {
+        switch (id.toLowerCase()) {
+            case "a4fg7h":
+                return new Eevee(name, type, element, level, height, hp, xp);
+            case "pr2e9t":
+                return new Jolteon(name, type, element, level, height, hp, xp);
+            case "ir3o0a":
+                return new Squirtle(name, type, element, level, height, hp, xp);
+            case "zy3tr7":
+                return new Wartortle(name, type, element, level, height, hp, xp);
+            case "5dfj8q":
+                return new Blastoise(name, type, element, level, height, hp, xp);
+            case "h7rt5g":
+                return new Zubat(name, type, element, level, height, hp, xp);
+            case "bn6ef2":
+                return new Golbat(name, type, element, level, height, hp, xp);
+            case "3mp8ws":
+                return new Crobat(name, type, element, level, height, hp, xp);
+            default:
+                throw new IllegalArgumentException("Invalid Pokemon type: " + id);
         }
     }
 

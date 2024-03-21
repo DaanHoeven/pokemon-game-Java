@@ -8,15 +8,19 @@ import be.pokemon.implementations.Attack1;
 import be.pokemon.implementations.Attack2;
 import be.pokemon.implementations.Evolve;
 
-@JsonTypeName("eevee")
+@JsonTypeName("A4fG7h")
 public class Eevee extends be.pokemon.Pokemon implements Attack1, Attack2, Evolve {
 
     private double damage;
     private int evolutionStage;
 
-    public Eevee(String name, String element, int level, double height, double hp, int xp) {
-        super(name, element, level, height, hp, xp);
+    public Eevee(String name, String type, String element, int level, double height, double hp, int xp) {
+        super(name, type, element, level, height, hp, xp);
         this.evolutionStage = 1;
+    }
+
+    public String getId() {
+        return "A4fG7h";
     }
 
     public double tailWhip() {
@@ -50,7 +54,7 @@ public class Eevee extends be.pokemon.Pokemon implements Attack1, Attack2, Evolv
     public Jolteon evolveToJolteon() {
 
         if (this.getxp() >= 50) {
-            Jolteon jolteon = new Jolteon(this.getName(), this.getElement(), this.getLevel(),
+            Jolteon jolteon = new Jolteon(this.getName(), this.getType(), this.getElement(), this.getLevel(),
                     this.getHeight(), this.gethp(),
                     this.getxp());
 

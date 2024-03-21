@@ -1,26 +1,20 @@
 package be.pokemon.controller;
 
 import be.pokemon.Pokemon;
-import be.pokemon.model.EeveeEvo.Eevee;
-import be.pokemon.model.EeveeEvo.Jolteon;
-import be.pokemon.model.SquirtleEvo.Blastoise;
-import be.pokemon.model.SquirtleEvo.Squirtle;
-import be.pokemon.model.SquirtleEvo.Wartortle;
-import be.pokemon.model.ZubatEvo.Crobat;
-import be.pokemon.model.ZubatEvo.Golbat;
-import be.pokemon.model.ZubatEvo.Zubat;
+
 import be.pokemon.service.PokemonService;
+import be.pokemon.service.ServiceException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import java.util.List;
 
@@ -44,59 +38,23 @@ public class PokemonRestController {
 
     @PostMapping
     public ResponseEntity<String> addPokemon(@RequestBody Pokemon pokemon) {
-        String pokemonType = pokemon.getClass().getAnnotation(JsonTypeName.class).value();
-
-        if (pokemonType.equalsIgnoreCase("eevee")) {
-            Eevee eevee = new Eevee(pokemon.getName(), pokemon.getElement(),
-                    pokemon.getLevel(),
-                    pokemon.getHeight(), pokemon.gethp(), pokemon.getxp());
-            pokemonService.addPokemon(eevee);
-            return ResponseEntity.ok("Eevee added successfully");
-        } else if (pokemonType.equalsIgnoreCase("jolteon")) {
-            Jolteon jolteon = new Jolteon(pokemon.getName(), pokemon.getElement(),
-                    pokemon.getLevel(),
-                    pokemon.getHeight(), pokemon.gethp(), pokemon.getxp());
-            pokemonService.addPokemon(jolteon);
-            return ResponseEntity.ok("Jolteon added successfully");
-        } else if (pokemonType.equalsIgnoreCase("blastoise")) {
-            Blastoise blastoise = new Blastoise(pokemon.getName(), pokemon.getElement(),
-                    pokemon.getLevel(),
-                    pokemon.getHeight(), pokemon.gethp(), pokemon.getxp());
-            pokemonService.addPokemon(blastoise);
-            return ResponseEntity.ok("Blastoise added successfully");
-        } else if (pokemonType.equalsIgnoreCase("squirtle")) {
-            Squirtle squirtle = new Squirtle(pokemon.getName(), pokemon.getElement(),
-                    pokemon.getLevel(),
-                    pokemon.getHeight(), pokemon.gethp(), pokemon.getxp());
-            pokemonService.addPokemon(squirtle);
-            return ResponseEntity.ok("Squirtle added successfully");
-        } else if (pokemonType.equalsIgnoreCase("wartortle")) {
-            Wartortle wartortle = new Wartortle(pokemon.getName(), pokemon.getElement(),
-                    pokemon.getLevel(),
-                    pokemon.getHeight(), pokemon.gethp(), pokemon.getxp());
-            pokemonService.addPokemon(wartortle);
-            return ResponseEntity.ok("Wartortle added successfully");
-        } else if (pokemonType.equalsIgnoreCase("crobat")) {
-            Crobat crobat = new Crobat(pokemon.getName(), pokemon.getElement(),
-                    pokemon.getLevel(),
-                    pokemon.getHeight(), pokemon.gethp(), pokemon.getxp());
-            pokemonService.addPokemon(crobat);
-            return ResponseEntity.ok("Crobat added successfully");
-        } else if (pokemonType.equalsIgnoreCase("zubat")) {
-            Zubat zubat = new Zubat(pokemon.getName(), pokemon.getElement(),
-                    pokemon.getLevel(),
-                    pokemon.getHeight(), pokemon.gethp(), pokemon.getxp());
-            pokemonService.addPokemon(zubat);
-            return ResponseEntity.ok("Zubat added successfully");
-        } else if (pokemonType.equalsIgnoreCase("golbat")) {
-            Golbat golbat = new Golbat(pokemon.getName(), pokemon.getElement(),
-                    pokemon.getLevel(),
-                    pokemon.getHeight(), pokemon.gethp(), pokemon.getxp());
-            pokemonService.addPokemon(golbat);
-            return ResponseEntity.ok("Golbat added successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Pokemon type");
+        try {
+            Pokemon newPokemon = Pokemon.createPokemon(pokemon.getName(), pokemon.getType(), pokemon.getElement(),
+                    pokemon.getLevel(), pokemon.getHeight(), pokemon.gethp(), pokemon.getxp(), pokemon.getId());
+            pokemonService.addPokemon(newPokemon);
+            return ResponseEntity.ok(newPokemon.getType() + " added successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
+    @DeleteMapping("/{name}")
+    public ResponseEntity<String> deletePokemonByName(@PathVariable String name) {
+        try {
+            pokemonService.deletePokemonByName(name);
+            return ResponseEntity.ok("Pokemon with name " + name + " deleted successfully");
+        } catch (ServiceException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

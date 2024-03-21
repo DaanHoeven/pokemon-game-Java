@@ -8,15 +8,19 @@ import be.pokemon.implementations.Attack1;
 import be.pokemon.implementations.Attack2;
 import be.pokemon.implementations.Evolve;
 
-@JsonTypeName("wartortle")
+@JsonTypeName("zY3tR7")
 public class Wartortle extends be.pokemon.Pokemon implements Attack1, Attack2, Evolve {
 
     private double damage;
     private int evolutionStage;
 
-    public Wartortle(String name, String element, int level, double height, double hp, int xp) {
-        super(name, element, level, height, hp, xp);
+    public Wartortle(String name, String type, String element, int level, double height, double hp, int xp) {
+        super(name, type, element, level, height, hp, xp);
         this.evolutionStage = 2;
+    }
+
+    public String getId() {
+        return "zY3tR7";
     }
 
     public double aquaJet() {
@@ -50,7 +54,7 @@ public class Wartortle extends be.pokemon.Pokemon implements Attack1, Attack2, E
     public Blastoise evolveToBlastoise() {
 
         if (this.xp >= 100 && this.level > 50) {
-            Blastoise blastoise = new Blastoise(this.getName(), this.getElement(), this.getLevel(),
+            Blastoise blastoise = new Blastoise(this.getName(), this.getType(), this.getElement(), this.getLevel(),
                     this.getHeight(), this.gethp(),
                     this.getxp());
 

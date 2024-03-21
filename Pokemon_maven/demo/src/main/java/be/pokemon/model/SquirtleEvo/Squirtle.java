@@ -8,15 +8,19 @@ import be.pokemon.implementations.Attack1;
 import be.pokemon.implementations.Attack2;
 import be.pokemon.implementations.Evolve;
 
-@JsonTypeName("squirtle")
+@JsonTypeName("iR3O0A")
 public class Squirtle extends be.pokemon.Pokemon implements Attack1, Attack2, Evolve {
 
     private double damage;
     private int evolutionStage;
 
-    public Squirtle(String name, String element, int level, double height, double hp, int xp) {
-        super(name, element, level, height, hp, xp);
+    public Squirtle(String name, String type, String element, int level, double height, double hp, int xp) {
+        super(name, type, element, level, height, hp, xp);
         this.evolutionStage = 1;
+    }
+
+    public String getId() {
+        return "iR3O0A";
     }
 
     public double bubble() {
@@ -59,7 +63,7 @@ public class Squirtle extends be.pokemon.Pokemon implements Attack1, Attack2, Ev
 
     public void evolveToWartortle() {
         if (this.xp >= 50 && this.level >= 25) {
-            Wartortle wartortle = new Wartortle(this.getName(), this.getElement(), this.getLevel(),
+            Wartortle wartortle = new Wartortle(this.getName(), this.getType(), this.getElement(), this.getLevel(),
                     this.getHeight(), this.gethp(),
                     this.getxp());
 
@@ -83,7 +87,7 @@ public class Squirtle extends be.pokemon.Pokemon implements Attack1, Attack2, Ev
 
     public void evolveToBlastoise() {
         if (this.xp >= 50 && this.level >= 25) {
-            Blastoise blastoise = new Blastoise(this.getName(), this.getElement(), this.getLevel(),
+            Blastoise blastoise = new Blastoise(this.getName(), this.getType(), this.getElement(), this.getLevel(),
                     this.getHeight(), this.gethp(),
                     this.getxp());
 

@@ -23,7 +23,7 @@ public class PokemonServiceTest {
 
     @Test
     void givenNewPokemon_whenAddPokemon_thenPokemonAddedSuccessfully() {
-        Eevee newPokemon = new Eevee("Daan", "normal", 200, 60.12, 1220, 2000);
+        Eevee newPokemon = new Eevee("Daan", "Eevee", "normal", 200, 60.12, 1220, 2000);
 
         pokemonService.addPokemon(newPokemon);
 
@@ -32,7 +32,7 @@ public class PokemonServiceTest {
 
     @Test
     void givenExistingPokemon_whenAddPokemon_thenThrowDomainException() {
-        Eevee existingPokemon = new Eevee("Daan", "normal", 200, 60.12, 1220, 2000);
+        Eevee existingPokemon = new Eevee("Daan", "Eevee", "normal", 200, 60.12, 1220, 2000);
         pokemonRepository.addPokemon(existingPokemon);
 
         DomainException exception = assertThrows(DomainException.class,
@@ -42,20 +42,20 @@ public class PokemonServiceTest {
 
     @Test
     void givenExistingPokemon_whenPokemonExists_thenReturnTrue() {
-        Eevee existingPokemon = new Eevee("Pikachu", "normal", 200, 60.12, 1220, 2000);
+        Eevee existingPokemon = new Eevee("Pikachu", "Eevee", "normal", 200, 60.12, 1220, 2000);
         pokemonRepository.addPokemon(existingPokemon);
 
-        boolean result = pokemonService.pokemonExists("Pikachu", "electric");
+        boolean result = pokemonService.pokemonExists("Pikachu");
 
         assertTrue(result);
     }
 
     @Test
     void givenNonExistingPokemon_whenPokemonExists_thenReturnFalse() {
-        Eevee existingPokemon = new Eevee("Daan", "normal", 200, 60.12, 1220, 2000);
+        Eevee existingPokemon = new Eevee("Daan", "Eevee", "normal", 200, 60.12, 1220, 2000);
         pokemonRepository.addPokemon(existingPokemon);
 
-        boolean result = pokemonService.pokemonExists("Charmander", "fire");
+        boolean result = pokemonService.pokemonExists("Charmander");
 
         assertFalse(result);
     }

@@ -6,12 +6,16 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import be.pokemon.implementations.Evolve;
 
-@JsonTypeName("crobat")
+@JsonTypeName("3mP8wS")
 public class Crobat extends be.pokemon.Pokemon implements Evolve {
     private double damage;
 
-    public Crobat(String name, String element, int level, double height, double hp, int xp) {
-        super(name, element, level, height, hp, xp);
+    public Crobat(String name, String type, String element, int level, double height, double hp, int xp) {
+        super(name, type, element, level, height, hp, xp);
+    }
+
+    public String getId() {
+        return "3mP8wS";
     }
 
     public double echoBeam() {
@@ -55,7 +59,10 @@ public class Crobat extends be.pokemon.Pokemon implements Evolve {
 
     public void evolveToCrobat() {
         if (this.xp >= 50 && this.level >= 25) {
-            Crobat crobat = new Crobat(this.name, this.element, this.level, this.height, this.hp, this.xp);
+            Crobat crobat = new Crobat(this.getName(), this.getType(), this.getElement(), this.getLevel(),
+                    this.getHeight(), this.gethp(),
+                    this.getxp());
+            ;
 
             crobat.hp += 30;
             crobat.level += 1;

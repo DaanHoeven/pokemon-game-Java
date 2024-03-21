@@ -8,13 +8,17 @@ import be.pokemon.implementations.Attack1;
 import be.pokemon.implementations.Attack2;
 import be.pokemon.implementations.Evolve;
 
-@JsonTypeName("golbat")
+@JsonTypeName("bN6eF2")
 public class Golbat extends be.pokemon.Pokemon implements Attack1, Attack2, Evolve {
     private double damage;
     private int evolutionStage;
 
-    public Golbat(String name, String element, int level, double height, double hp, int xp) {
-        super(name, element, level, height, hp, xp);
+    public Golbat(String name, String type, String element, int level, double height, double hp, int xp) {
+        super(name, type, element, level, height, hp, xp);
+    }
+
+    public String getId() {
+        return "bN6eF2";
     }
 
     public double echoBeam() {
@@ -49,7 +53,7 @@ public class Golbat extends be.pokemon.Pokemon implements Attack1, Attack2, Evol
     public Crobat evolveToWartortle() {
 
         if (this.xp >= 500 && this.level >= 50) {
-            Crobat crobat = new Crobat(this.getName(), this.getElement(), this.getLevel(),
+            Crobat crobat = new Crobat(this.getName(), this.getType(), this.getElement(), this.getLevel(),
                     this.getHeight(), this.gethp(),
                     this.getxp());
 
@@ -82,7 +86,7 @@ public class Golbat extends be.pokemon.Pokemon implements Attack1, Attack2, Evol
 
     public void evolveToCrobat() {
         if (this.xp >= 50 && this.level >= 25) {
-            Crobat crobat = new Crobat(this.getName(), this.getElement(), this.getLevel(),
+            Crobat crobat = new Crobat(this.getName(), this.getType(), this.getElement(), this.getLevel(),
                     this.getHeight(), this.gethp(),
                     this.getxp());
 

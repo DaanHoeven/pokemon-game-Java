@@ -16,9 +16,9 @@ public class PokemonRepository {
 
     public PokemonRepository() {
         pokemons = new ArrayList<>(List.of(
-                new Eevee("Léa", "normal", 25, 1.4, 50.0, 700),
-                new Squirtle("Daan", "water", 32, 2.6, 60.0, 1220),
-                new Crobat("Lucy", "poison / flying", 34, 3.5, 45.0, 1100)));
+                new Eevee("Léa", "eevee", "normal", 25, 1.4, 50.0, 700),
+                new Squirtle("Daan", "squirtle", "water", 32, 2.6, 60.0, 1220),
+                new Crobat("Lucy", "Crobat", "poison / flying", 34, 3.5, 45.0, 1100)));
     }
 
     public List<Pokemon> getAllPokemons() {
@@ -29,7 +29,14 @@ public class PokemonRepository {
         pokemons.add(pokemon);
     }
 
-    public boolean pokemonExists(String name, String type) {
+    public void deletePokemonByName(String name) {
+        Pokemon pokemonToDelete = getPokemonByName(name);
+        if (pokemonToDelete != null) {
+            pokemons.remove(pokemonToDelete);
+        }
+    }
+
+    public boolean pokemonExists(String name) {
         for (Pokemon pokemon : pokemons) {
             if (name.equals(pokemon.getName())) {
                 return true;

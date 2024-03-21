@@ -4,13 +4,17 @@ import java.util.Locale;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-@JsonTypeName("zubat")
+@JsonTypeName("H7rT5g")
 public class Zubat extends be.pokemon.Pokemon {
     private double damage;
     private int evolutionStage;
 
-    public Zubat(String name, String element, int level, double height, double hp, int xp) {
-        super(name, element, level, height, hp, xp);
+    public Zubat(String name, String type, String element, int level, double height, double hp, int xp) {
+        super(name, type, element, level, height, hp, xp);
+    }
+
+    public String getId() {
+        return "H7rT5g";
     }
 
     public double bite() {
@@ -44,7 +48,7 @@ public class Zubat extends be.pokemon.Pokemon {
 
     public void evolveToGolbat() {
         if (this.xp >= 50 && this.level >= 25) {
-            Golbat golbat = new Golbat(this.getName(), this.getElement(), this.getLevel(),
+            Golbat golbat = new Golbat(this.getName(), this.getType(), this.getElement(), this.getLevel(),
                     this.getHeight(), this.gethp(),
                     this.getxp());
 
@@ -68,7 +72,7 @@ public class Zubat extends be.pokemon.Pokemon {
 
     public void evolveToCrobat() {
         if (this.xp >= 50 && this.level >= 25) {
-            Crobat crobat = new Crobat(this.getName(), this.getElement(), this.getLevel(),
+            Crobat crobat = new Crobat(this.getName(), this.getType(), this.getElement(), this.getLevel(),
                     this.getHeight(), this.gethp(),
                     this.getxp());
 

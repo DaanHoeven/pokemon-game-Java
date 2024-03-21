@@ -3,30 +3,54 @@ package be.pokemon;
 import java.util.Scanner;
 
 import be.pokemon.model.DomainException;
+import be.pokemon.model.EeveeEvo.Eevee;
+import be.pokemon.model.EeveeEvo.Jolteon;
+import be.pokemon.model.SquirtleEvo.Blastoise;
+import be.pokemon.model.SquirtleEvo.Squirtle;
+import be.pokemon.model.SquirtleEvo.Wartortle;
+import be.pokemon.model.ZubatEvo.Crobat;
+import be.pokemon.model.ZubatEvo.Golbat;
+import be.pokemon.model.ZubatEvo.Zubat;
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "typeOfPokemon")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Eevee.class, name = "eevee"),
+        @JsonSubTypes.Type(value = Jolteon.class, name = "jolteon"),
+        @JsonSubTypes.Type(value = Blastoise.class, name = "blastoise"),
+        @JsonSubTypes.Type(value = Squirtle.class, name = "squirtle"),
+        @JsonSubTypes.Type(value = Wartortle.class, name = "wartortle"),
+        @JsonSubTypes.Type(value = Crobat.class, name = "crobat"),
+        @JsonSubTypes.Type(value = Zubat.class, name = "zubat"),
+        @JsonSubTypes.Type(value = Golbat.class, name = "golbat")
+})
 
 public abstract class Pokemon {
     protected String name;
-    protected String type;
     protected String element;
     protected int level;
     protected double height;
-    protected double HP;
-    protected int XP;
+    protected double hp;
+    protected int xp;
     protected int power;
+    private String type;
 
-    public Pokemon(String name, String type, String element, int level, double height, double HP, int XP) {
+    public Pokemon(String name, String element, int level, double height, double hp, int xp) {
         setName(name);
-        setType(type);
         setElement(element);
         setLevel(level);
         setHeight(height);
-        setHP(HP);
-        setXP(XP);
-        setPower(XP);
+        sethp(hp);
+        setxp(xp);
+        setPower(power);
+        this.type = this.getClass().getAnnotation(JsonTypeName.class).value();
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -36,19 +60,8 @@ public abstract class Pokemon {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        if (type == null || type.isEmpty()) {
-            throw new DomainException("Type cannot be null or empty");
-        }
-        this.type = type;
-    }
-
     public String getElement() {
-        return element;
+        return this.element;
     }
 
     public void setElement(String element) {
@@ -59,7 +72,7 @@ public abstract class Pokemon {
     }
 
     public int getLevel() {
-        return level;
+        return this.level;
     }
 
     public void setLevel(int level) {
@@ -70,7 +83,7 @@ public abstract class Pokemon {
     }
 
     public double getHeight() {
-        return height;
+        return this.height;
     }
 
     public void setHeight(double height) {
@@ -80,31 +93,31 @@ public abstract class Pokemon {
         this.height = height;
     }
 
-    public double getHP() {
-        return HP;
+    public double gethp() {
+        return this.hp;
     }
 
-    public void setHP(Double HP) {
-        if (HP == null || HP <= 0) {
-            this.HP = 1.0;
+    public void sethp(Double hp) {
+        if (hp == null || hp <= 0) {
+            this.hp = 1.0;
         } else {
-            this.HP = HP;
+            this.hp = hp;
         }
     }
 
-    public int getXP() {
-        return XP;
+    public int getxp() {
+        return this.xp;
     }
 
-    public void setXP(int XP) {
-        if (XP <= 0) {
-            throw new DomainException("XP must be a positive integer");
+    public void setxp(int xp) {
+        if (xp <= 0) {
+            throw new DomainException("xp must be a positive integer");
         }
-        this.XP = XP;
+        this.xp = xp;
     }
 
     public int getPower() {
-        return power;
+        return this.power;
     }
 
     public void setPower(int power) {
@@ -114,17 +127,36 @@ public abstract class Pokemon {
         this.power = power;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        if (!isValidType(type)) {
+            throw new DomainException("Invalid Pokemon type: " + type);
+        }
+        this.type = type;
+    }
+
+    private boolean isValidType(String type) {
+        return type != null && !type.isEmpty() &&
+                ("eevee".equalsIgnoreCase(type) || "jolteon".equalsIgnoreCase(type) ||
+                        "blastoise".equalsIgnoreCase(type) || "squirtle".equalsIgnoreCase(type) ||
+                        "wartortle".equalsIgnoreCase(type) || "crobat".equalsIgnoreCase(type) ||
+                        "zubat".equalsIgnoreCase(type) || "golbat".equalsIgnoreCase(type));
+    }
+
     public void takeDamage(double damage) {
         if (damage <= 0) {
             throw new DomainException("Damage must be a positive number");
         }
 
-        this.HP -= damage;
-        if (this.HP < 0) {
-            this.HP = 0;
+        this.hp -= damage;
+        if (this.hp < 0) {
+            this.hp = 0;
         }
-        System.out.println(this.name + " remaining HP: " + this.HP);
-        if (this.HP == 0) {
+        System.out.println(this.name + " remaining hp: " + this.hp);
+        if (this.hp == 0) {
             System.out.println(this.name + " fainted!");
         }
     }
@@ -148,12 +180,12 @@ public abstract class Pokemon {
     }
 
     public void rest() {
-        double gainHP = this.HP * 0.4;
-        String formattedGainHP = String.format("%.2f", gainHP).replace(',', '.');
-        System.out.println(this.getName() + " used rest! It gained +2 power and " + formattedGainHP + "HP");
+        double gainhp = this.hp * 0.4;
+        String formattedGainhp = String.format("%.2f", gainhp).replace(',', '.');
+        System.out.println(this.getName() + " used rest! It gained +2 power and " + formattedGainhp + "hp");
         this.powerUp();
         this.powerUp();
-        this.HP += gainHP;
+        this.hp += gainhp;
     }
 
     public double doAttackOne() {
@@ -187,7 +219,7 @@ public abstract class Pokemon {
         this.power += 5;
         opponent.power += 5;
 
-        while (this.getHP() > 0 && opponent.getHP() > 0) {
+        while (this.gethp() > 0 && opponent.gethp() > 0) {
             System.out.println("-------------------");
             if (isPlayer1Turn) {
                 System.out.println(this.getName() + "'s turn:");

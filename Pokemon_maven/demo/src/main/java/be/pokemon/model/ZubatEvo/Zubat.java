@@ -2,12 +2,15 @@ package be.pokemon.model.ZubatEvo;
 
 import java.util.Locale;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("zubat")
 public class Zubat extends be.pokemon.Pokemon {
     private double damage;
     private int evolutionStage;
 
-    public Zubat(String name, String type, String element, int level, double height, double HP, int XP) {
-        super(name, type, element, level, height, HP, XP);
+    public Zubat(String name, String element, int level, double height, double hp, int xp) {
+        super(name, element, level, height, hp, xp);
     }
 
     public double bite() {
@@ -15,7 +18,7 @@ public class Zubat extends be.pokemon.Pokemon {
             double result = this.level + (this.height * 1.50);
             this.damage = Double.parseDouble(String.format(Locale.US, "%.2f", result));
             this.power -= 1;
-            this.XP += 30;
+            this.xp += 30;
             System.err.println("You did " + this.damage + " damage!");
             return this.damage;
         } else {
@@ -29,8 +32,8 @@ public class Zubat extends be.pokemon.Pokemon {
             double result = (this.level * 1.6) + (this.height * 2.8);
             this.damage = Double.parseDouble(String.format(Locale.US, "%.2f", result));
             this.power -= 3;
-            this.XP += 70;
-            this.HP *= 1.3;
+            this.xp += 70;
+            this.hp *= 1.3;
             System.err.println("You did " + this.damage + " damage!");
             return this.damage;
         } else {
@@ -40,50 +43,50 @@ public class Zubat extends be.pokemon.Pokemon {
     }
 
     public void evolveToGolbat() {
-        if (this.XP >= 50 && this.level >= 25) {
-            Golbat golbat = new Golbat(this.getName(), this.getType(), this.getElement(), this.getLevel(),
-                    this.getHeight(), this.getHP(),
-                    this.getXP());
+        if (this.xp >= 50 && this.level >= 25) {
+            Golbat golbat = new Golbat(this.getName(), this.getElement(), this.getLevel(),
+                    this.getHeight(), this.gethp(),
+                    this.getxp());
 
-            golbat.setHP(golbat.getHP() + 30);
+            golbat.sethp(golbat.gethp() + 30);
             golbat.setLevel(golbat.getLevel() + 1);
             golbat.setHeight(golbat.getHeight() * 2.5);
-            golbat.setXP(golbat.getXP() - 50);
+            golbat.setxp(golbat.getxp() - 50);
             golbat.setPower(this.power);
             System.out.println(this.name + " has evolved into Golbat!");
 
             this.name = golbat.getName();
             this.level = golbat.getLevel();
             this.height = golbat.getHeight();
-            this.HP = golbat.getHP();
-            this.XP = golbat.getXP();
+            this.hp = golbat.gethp();
+            this.xp = golbat.getxp();
             this.power = golbat.getPower();
         } else {
-            System.out.println("Not enough XP or level to evolve Zubat to Golbat!");
+            System.out.println("Not enough xp or level to evolve Zubat to Golbat!");
         }
     }
 
     public void evolveToCrobat() {
-        if (this.XP >= 50 && this.level >= 25) {
-            Crobat crobat = new Crobat(this.getName(), this.getType(), this.getElement(), this.getLevel(),
-                    this.getHeight(), this.getHP(),
-                    this.getXP());
+        if (this.xp >= 50 && this.level >= 25) {
+            Crobat crobat = new Crobat(this.getName(), this.getElement(), this.getLevel(),
+                    this.getHeight(), this.gethp(),
+                    this.getxp());
 
-            crobat.setHP(crobat.getHP() + 30);
+            crobat.sethp(crobat.gethp() + 30);
             crobat.setLevel(crobat.getLevel() + 1);
             crobat.setHeight(crobat.getHeight() * 2.5);
-            crobat.setXP(crobat.getXP() - 50);
+            crobat.setxp(crobat.getxp() - 50);
             crobat.setPower(this.power);
             System.out.println(this.name + " has evolved into Crobat!");
 
             this.name = crobat.getName();
             this.level = crobat.getLevel();
             this.height = crobat.getHeight();
-            this.HP = crobat.getHP();
-            this.XP = crobat.getXP();
+            this.hp = crobat.gethp();
+            this.xp = crobat.getxp();
             this.power = crobat.getPower();
         } else {
-            System.out.println("Not enough XP or level to evolve Golbat to Crobat!");
+            System.out.println("Not enough xp or level to evolve Golbat to Crobat!");
         }
     }
 
@@ -102,11 +105,9 @@ public class Zubat extends be.pokemon.Pokemon {
         if (this.evolutionStage == 1) {
             evolveToGolbat();
             this.evolutionStage = 2;
-            this.type = "golbat";
         } else if (this.evolutionStage == 2) {
             evolveToCrobat();
             this.evolutionStage = 3;
-            this.type = "crobat";
         } else if (this.evolutionStage == 3) {
 
             System.out.println("Can not evolve this Pokémon further!");

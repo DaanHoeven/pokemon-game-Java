@@ -2,17 +2,20 @@ package be.pokemon.model.EeveeEvo;
 
 import java.util.Locale;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import be.pokemon.implementations.Attack1;
 import be.pokemon.implementations.Attack2;
 import be.pokemon.implementations.Evolve;
 
+@JsonTypeName("eevee")
 public class Eevee extends be.pokemon.Pokemon implements Attack1, Attack2, Evolve {
 
     private double damage;
     private int evolutionStage;
 
-    public Eevee(String name, String type, String element, int level, double height, double HP, int XP) {
-        super(name, type, element, level, height, HP, XP);
+    public Eevee(String name, String element, int level, double height, double hp, int xp) {
+        super(name, element, level, height, hp, xp);
         this.evolutionStage = 1;
     }
 
@@ -21,8 +24,8 @@ public class Eevee extends be.pokemon.Pokemon implements Attack1, Attack2, Evolv
             double result = this.getLevel() + (this.getHeight() * 0.33);
             this.damage = Double.parseDouble(String.format(Locale.US, "%.2f", result));
             this.power -= 1;
-            this.XP += 30;
-            System.err.println("You did " + this.damage + " damage!");
+            this.xp += 30;
+            System.out.println("You did " + this.damage + " damage!");
             return this.damage;
         } else {
             System.out.println("Not enough power to attack!");
@@ -35,7 +38,7 @@ public class Eevee extends be.pokemon.Pokemon implements Attack1, Attack2, Evolv
             double result = (this.level * 3.2) + this.height;
             this.damage = Double.parseDouble(String.format(Locale.US, "%.2f", result));
             this.power -= 3;
-            this.XP += 70;
+            this.xp += 70;
             System.err.println("You did " + this.damage + " damage!");
             return this.damage;
         } else {
@@ -46,20 +49,20 @@ public class Eevee extends be.pokemon.Pokemon implements Attack1, Attack2, Evolv
 
     public Jolteon evolveToJolteon() {
 
-        if (this.getXP() >= 50) {
-            Jolteon jolteon = new Jolteon(this.getName(), this.getType(), this.getElement(), this.getLevel(),
-                    this.getHeight(), this.getHP(),
-                    this.getXP());
+        if (this.getxp() >= 50) {
+            Jolteon jolteon = new Jolteon(this.getName(), this.getElement(), this.getLevel(),
+                    this.getHeight(), this.gethp(),
+                    this.getxp());
 
-            jolteon.setHP(jolteon.getHP() + 30);
+            jolteon.sethp(jolteon.gethp() + 30);
             jolteon.setLevel(jolteon.getLevel() + 1);
             jolteon.setHeight(jolteon.getHeight() * 1.4);
-            jolteon.setXP(jolteon.getXP() - 50);
+            jolteon.setxp(jolteon.getxp() - 50);
             System.out.println(this.getName() + " has evolved into Jolteon!");
 
             return jolteon;
         } else {
-            System.out.println("Not enough XP to evolve to Jolteon!");
+            System.out.println("Not enough xp to evolve to Jolteon!");
             return null;
         }
     }
@@ -79,7 +82,6 @@ public class Eevee extends be.pokemon.Pokemon implements Attack1, Attack2, Evolv
         if (this.evolutionStage == 1) {
             this.evolutionStage = 2;
             this.element = "electricity";
-            this.type = "jolteon";
             evolveToJolteon();
         } else if (this.evolutionStage == 2) {
             System.out.println("Can not evolve this Pokémon further!");

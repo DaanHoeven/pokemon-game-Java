@@ -16,12 +16,44 @@ public class PokemonRepository {
 
     public PokemonRepository() {
         pokemons = new ArrayList<>(List.of(
-                new Eevee("Léa", "eevee", "normal", 25, 1.4, 50.0, 700),
-                new Squirtle("Daan", "squirtle", "water", 32, 2.6, 60.0, 1220),
-                new Crobat("Lucy", "crobat", "poison / flying", 34, 3.5, 45.0, 1100)));
+                new Eevee("Léa", "normal", 25, 1.4, 50.0, 700),
+                new Squirtle("Daan", "water", 32, 2.6, 60.0, 1220),
+                new Crobat("Lucy", "poison / flying", 34, 3.5, 45.0, 1100)));
     }
 
     public List<Pokemon> getAllPokemons() {
         return new ArrayList<>(pokemons);
+    }
+
+    public void addPokemon(Pokemon pokemon) {
+        pokemons.add(pokemon);
+    }
+
+    public boolean pokemonExists(String name, String type) {
+        for (Pokemon pokemon : pokemons) {
+            if (name.equals(pokemon.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Pokemon> pokemonsByName(String name) {
+        List<Pokemon> pokemonsByName = new ArrayList<>();
+        for (Pokemon pokemon : pokemons) {
+            if (pokemon.getName().contains(name)) {
+                pokemonsByName.add(pokemon);
+            }
+        }
+        return pokemonsByName;
+    }
+
+    public Pokemon getPokemonByName(String name) {
+        for (Pokemon pokemon : pokemons) {
+            if (pokemon.getName().equals(name)) {
+                return pokemon;
+            }
+        }
+        return null;
     }
 }
